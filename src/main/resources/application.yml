@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: enterprise-order-orchestrator
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/orchestrator_db
+    username: admin_user
+    password: enterprise_secret
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update # Esto creará las tablas automáticamente al arrancar
+    show-sql: true     # Verás las consultas SQL en la consola para depurar
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8081 # El microservicio correrá en el 8081

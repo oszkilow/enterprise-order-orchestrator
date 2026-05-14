@@ -1,0 +1,9 @@
+version: 2
+updates:
+  - package-ecosystem: "maven" # Para que revise tu pom.xml
+    directory: "/"
+    schedule:
+      interval: "daily" # Revisa actualizaciones cada día
+    open-pull-requests-limit: 5
+    reviewers:
+      - "oszkilow" # Aquí va tu usuario de GitHub

@@ -1,0 +1,12 @@
+/home/ozscar-fuentes/IdeaProjects/enterprise-order-orchestrator/src/main/java/com/oszkilow/orchestrator/exception/GlobalExceptionHandler.java
+/home/ozscar-fuentes/IdeaProjects/enterprise-order-orchestrator/src/main/java/com/oszkilow/orchestrator/client/ExternalValidationClient.java
+/home/ozscar-fuentes/IdeaProjects/enterprise-order-orchestrator/src/main/java/com/oszkilow/orchestrator/constant/TransactionStatus.java
+/home/ozscar-fuentes/IdeaProjects/enterprise-order-orchestrator/src/main/java/com/oszkilow/orchestrator/dto/OrderPlacementDTO.java
+/home/ozscar-fuentes/IdeaProjects/enterprise-order-orchestrator/src/main/java/com/oszkilow/orchestrator/config/SecurityConfig.java
+/home/ozscar-fuentes/IdeaProjects/enterprise-order-orchestrator/src/main/java/com/oszkilow/orchestrator/model/OrderTransactionEntity.java
+/home/ozscar-fuentes/IdeaProjects/enterprise-order-orchestrator/src/main/java/com/oszkilow/orchestrator/config/OpenApiConfig.java
+/home/ozscar-fuentes/IdeaProjects/enterprise-order-orchestrator/src/main/java/com/oszkilow/orchestrator/OrderOrchestratorApplication.java
+/home/ozscar-fuentes/IdeaProjects/enterprise-order-orchestrator/src/main/java/com/oszkilow/orchestrator/dto/ErrorResponseDTO.java
+/home/ozscar-fuentes/IdeaProjects/enterprise-order-orchestrator/src/main/java/com/oszkilow/orchestrator/repository/OrderTransactionRepository.java
+/home/ozscar-fuentes/IdeaProjects/enterprise-order-orchestrator/src/main/java/com/oszkilow/orchestrator/api/OrderOrchestrationController.java
+/home/ozscar-fuentes/IdeaProjects/enterprise-order-orchestrator/src/main/java/com/oszkilow/orchestrator/service/OrderOrchestratorService.java
