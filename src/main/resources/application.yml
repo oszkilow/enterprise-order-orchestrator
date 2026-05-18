@@ -2,19 +2,27 @@ spring:
   application:
     name: enterprise-order-orchestrator
 
+  # Configuración para que funcione DENTRO de Docker
   datasource:
-    url: jdbc:postgresql://localhost:5433/orchestrator_db
-    username: admin_user
-    password: enterprise_secret
+    url: jdbc:postgresql://orchestrator-db:5432/orchestrator_db
+    username: oscar
+    password: oscar
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
-      ddl-auto: update # Esto creará las tablas automáticamente al arrancar
-    show-sql: true     # Verás las consultas SQL en la consola para depurar
+      ddl-auto: update
+    show-sql: true
     properties:
       hibernate:
         format_sql: true
 
+  # KAFKA DEBE IR ALINEADO CON DATASOURCE (bajo spring:)
+  kafka:
+    bootstrap-servers: kafka:29092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
 server:
-  port: 8081 # El microservicio correrá en el 8081
+  port: 8081

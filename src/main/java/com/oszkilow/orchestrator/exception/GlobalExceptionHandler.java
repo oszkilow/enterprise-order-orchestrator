@@ -1,7 +1,7 @@
 package com.oszkilow.orchestrator.exception;
 
-import com.oszkilow.orchestrator.dto.ErrorResponseDTO;
-import feign.FeignException;
+import lombok.Builder;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,23 +11,55 @@ import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(FeignException.class)
-    public ResponseEntity<ErrorResponseDTO> handleFeignException(FeignException e) {
-        ErrorResponseDTO error = ErrorResponseDTO.builder()
-                .errorCode("EXTERNAL_SERVICE_ERROR")
-                .message("No pudimos validar la orden con el sistema externo.")
-                .timestamp(LocalDateTime.now())
-                .build();
-        return new ResponseEntity<>(error, HttpStatus.BAD_GATEWAY);
+
+    /**
+     * Captura errores de lógica de negocio (como el de referencia duplicada)
+     * que lanzamos manualmente en el Service.
+     */
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException ex) {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        String message = ex.getMessage();
+
+        // Identificamos nuestro error específico de duplicados
+        if (message != null && message.contains("referencia de negocio ya existe")) {
+            status = HttpStatus.CONFLICT; // Error 409
+        }
+
+        return buildResponse(status, message);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDTO> handleGeneralException(Exception e) {
-        ErrorResponseDTO error = ErrorResponseDTO.builder()
-                .errorCode("INTERNAL_SERVER_ERROR")
-                .message("Ocurrió un error inesperado en el orquestador.")
+    /**
+     * Captura errores cuando se envían IDs (UUID) con formato incorrecto
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, "Formato de argumento inválido: " + ex.getMessage());
+    }
+
+    /**
+     * Método auxiliar para construir la respuesta JSON
+     */
+    private ResponseEntity<ErrorResponse> buildResponse(HttpStatus status, String message) {
+        ErrorResponse error = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
+                .code(status.value())
+                .status(status.name())
+                .message(message)
                 .build();
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        return new ResponseEntity<>(error, status);
+    }
+
+    /**
+     * Clase interna para la estructura del JSON de error
+     */
+    @Getter
+    @Builder
+    public static class ErrorResponse {
+        private LocalDateTime timestamp;
+        private int code;
+        private String status;
+        private String message;
     }
 }

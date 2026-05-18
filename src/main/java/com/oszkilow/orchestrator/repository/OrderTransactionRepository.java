@@ -1,9 +1,12 @@
-package com.oszkilow.orchestrator.repository;
+package com.oszkilow.orchestrator.model.repository;
 
-import com.oszkilow.orchestrator.model.OrderTransactionEntity;
+import com.oszkilow.orchestrator.model.entity.OrderTransactionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 import java.util.UUID;
+
+
 
 @Repository
 public interface OrderTransactionRepository extends JpaRepository<OrderTransactionEntity, UUID> {
